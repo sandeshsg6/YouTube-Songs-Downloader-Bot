@@ -19,12 +19,15 @@ def download_videos(update: Update, context: CallbackContext):
     if validators.url(update.message.text):
         try:
             update.message.reply_text("Downloading your video!")
+            
             video_path = YouTube(update.message.text).streams.get_highest_resolution().download()
             update.message.reply_text("video downloaded. Uploading it!") 
-            print(video_path)
-            context.bot.send_video(update.message.chat_id, video=open(str(video_path), 'rb'))
+            
+            modified_video_path = str(video_path) + "1.mp4"
+            os.rename(str(video_path),modified_video_path)
+            context.bot.send_video(update.message.chat_id, video=open(str(modified_video_path), 'rb'))
             os.remove(video_path)
-            print(os.open(video_path))
+            
         except:
            update.message.reply_text(constants.unable_to_download) 
     else:
