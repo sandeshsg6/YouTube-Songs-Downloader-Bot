@@ -20,13 +20,10 @@ def download_videos(update: Update, context: CallbackContext):
         try:
             update.message.reply_text("Downloading your video!")
             
-            video_path = YouTube(update.message.text).streams.get_highest_resolution().download()
-            modified_video_path = str(video_path) + "1.mp4"
-            os.rename(str(video_path),modified_video_path)
-            update.message.reply_text("video downloaded. Uploading it!") 
-            
-            context.bot.send_video(update.message.chat_id, video=open(str(modified_video_path), 'rb'))
-            os.remove(modified_video_path)
+            video_path = YouTube(update.message.text).streams.get_highest_resolution().download('1.mp4')
+            update.message.reply_text("video downloaded. Uploading it!")
+            context.bot.send_video(update.message.chat_id, video=open(str(video_path), 'rb'))
+            os.remove(video_path)
             
         except:
            update.message.reply_text(constants.unable_to_download) 
