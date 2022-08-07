@@ -24,6 +24,7 @@ def download_videos(update: Update, context: CallbackContext):
             print(video_path)
             context.bot.send_video(update.message.chat_id, video=open(str(video_path), 'rb'))
             os.remove(video_path)
+            print(os.open(video_path))
         except:
            update.message.reply_text(constants.unable_to_download) 
     else:
