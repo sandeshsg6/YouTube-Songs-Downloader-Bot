@@ -21,6 +21,7 @@ def download_videos(update: Update, context: CallbackContext):
             update.message.reply_text("Downloading your video!")
             video_path = YouTube(update.message.text).streams.get_highest_resolution().download()
             update.message.reply_text("video downloaded. Uploading it!") 
+            print(video_path)
             context.bot.send_video(update.message.chat_id, video=open(str(video_path), 'rb'))
             os.remove(video_path)
         except:
