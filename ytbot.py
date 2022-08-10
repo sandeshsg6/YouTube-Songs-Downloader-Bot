@@ -5,6 +5,7 @@ import os
 import constants
 from pytube import YouTube
 import validators
+import time
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -18,11 +19,12 @@ def start(update: Update, context: CallbackContext) -> None:
 def download_audio(update: Update, context: CallbackContext):
     if validators.url(update.message.text):
         try:
-            update.message.reply_text("🔎 Finding the Song...")
+            msg1 = update.message.reply_text("🔎 Finding the Song...")
             audio_path = YouTube(update.message.text).streams.get_audio_only().download()
             song_name, extension = os.path.splitext(audio_path)
             new_audio_path = song_name + '.mp3'
-            os.rename(audio_path, new_audio_path) 
+            os.rename(audio_path, new_audio_path)
+            msg.edit_text("📥 Downloading...")
             context.bot.send_audio(update.message.chat_id, audio=open(new_audio_path, 'rb'))
             os.remove(new_audio_path)
         except Exception:
