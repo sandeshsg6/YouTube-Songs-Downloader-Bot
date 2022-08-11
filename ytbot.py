@@ -24,7 +24,7 @@ def download_audio(update: Update, context: CallbackContext):
             song_name, extension = os.path.splitext(audio_path)
             new_audio_path = song_name + '.mp3'
             os.rename(audio_path, new_audio_path)
-            msg2 = msg1.edit_text("📥 Downloading...")
+            msg1.edit_text("📥 Downloading...")
             context.bot.send_audio(update.message.chat_id, audio=open(new_audio_path, 'rb'))
             os.remove(new_audio_path)
         except Exception:
