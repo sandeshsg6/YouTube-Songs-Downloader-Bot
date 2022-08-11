@@ -26,6 +26,7 @@ def download_audio(update: Update, context: CallbackContext):
             os.rename(audio_path, new_audio_path)
             msg1.edit_text("📥 Downloading...")
             context.bot.send_audio(update.message.chat_id, audio=open(new_audio_path, 'rb'))
+            msg1.edit_text("")
             os.remove(new_audio_path)
         except Exception:
            update.message.reply_text(constants.unable_to_download) 
