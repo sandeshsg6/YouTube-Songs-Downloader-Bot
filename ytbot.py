@@ -20,7 +20,7 @@ def download_audio(update: Update, context: CallbackContext):
     if validators.url(update.message.text):
         try:
             msg1 = update.message.reply_text("🔎 Finding the Song...")
-            time.sleep(1)
+            time.sleep(0.5)
             audio_path = YouTube(update.message.text).streams.get_audio_only().download()
             song_name, extension = os.path.splitext(audio_path)
             new_audio_path = song_name + '.mp3'
